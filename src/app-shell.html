@@ -96,12 +96,17 @@
             attr-for-selected="name"
             fallback-selection="not-found"
             role="main">
-          <dashboard-view name="dashboard"></dashboard-view>
-          <detail-view name="detail"></detail-view>
+
+          <dashboard-view name="dashboard" people="{{people}}"></dashboard-view>
+          <detail-view name="detail" people="[[people]]"></detail-view>
           <not-found-view name="not-found"></not-found-view>
+
         </iron-pages>
+
       </app-header-layout>
+
     </app-drawer-layout>
+
   </template>
 
   <script>

@@ -7,14 +7,16 @@
     <style include="shared-styles">
       :host {
         display: block;
-
         padding: 10px;
       }
     </style>
 
     <div class="card">
-     
-      <ability-chart prop="[[chartProperties]]">
+      
+      <p>longitud: [[people.length]]</p>
+
+      <ability-chart
+        prop="[[chartProperties]]">
       </ability-chart>
 
     </div>
@@ -22,10 +24,15 @@
 
   <script>
     class detailView extends (class extends Polymer.Element {}) {
+      
       static get is() { return 'detail-view'; }
 
       static get properties() {
         return {
+          people: {
+            type: Array,
+            value: () => []
+          },
           chartProperties: {
             type: Object,
             value: {
@@ -75,8 +82,7 @@
                   "Social Skill"
                 ],
                 "values": [
-                  [85, 39, 55, 77, 95, 84, 50, 90, 69, 80, 30],
-                  [30, 70, 5, 100, 86, 30, 60, 100, 77, 33, 18]
+                  [85, 39, 55, 77, 95, 84, 50, 90, 69, 80, 30]
                 ],
                 "styles": [
                   { "borderColor": "#334b5c" },
@@ -85,9 +91,9 @@
               }
             }
           }
-        };
+        }
       }
-      
+
     }
 
     window.customElements.define(detailView.is, detailView);

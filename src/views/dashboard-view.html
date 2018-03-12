@@ -22,8 +22,19 @@
 
   <script>
     class dashboardView extends (class extends Polymer.Element {}) {
-      static get is() { return 'dashboard-view'; }
       
+      static get is() { return 'dashboard-view'; }
+
+      static get properties() { 
+        return {
+          people: {
+            type: Array,
+            notify: true,
+            value: () => []
+          }
+        }
+      }
+
       _changeRoute() {
         var event = new CustomEvent(
           'change-route', { 
@@ -35,6 +46,22 @@
         );
 
         this.dispatchEvent(event);
+      }
+
+      ready() {
+        super.ready();
+        this._loadPeople();
+      }
+
+      _loadPeople() {
+        let url = 'data/people.json';
+        fetch(url)
+          .then((resp) => resp.json())
+          .then((data) => {
+            this.set('people', data.people);
+          })
+          .catch(() => { console.error('error loading people.json') });
+      
       }
     }
 

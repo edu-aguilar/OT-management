@@ -1,0 +1,56 @@
+{
+  "people": [
+    {
+      "name": "Alfonso Gómez Castro",
+      "age": "35",
+      "mail": "alfonso.Gómez@domain.com",
+      "level": "N3",
+      "image": "",
+      "skills": {
+        "technical": {
+          "keys": [
+            "HTML5", "CSS3", "JavaScript", "EcmaScript6", "Web components",
+            "Polymer"
+          ],
+          "values": [
+            [ 54, 23, 83, 76, 82, 79 ]
+          ]
+        },
+        "soft": {
+          "keys": [
+            "Cultura", "Agile", "GIT", "Herramientas"
+          ],
+          "values": [
+            [ 85, 39, 55, 77 ]
+          ]
+        }
+      }
+    },
+    {
+      "name": "Eduardo Cinabrio López",
+      "age": "27",
+      "mail": "ecinabrio@domain.com",
+      "level": "N3",
+      "image": "",
+      "skills": {
+        "technical": {
+          "keys": [
+            "HTML5", "CSS3", "JavaScript", "EcmaScript6", "Web components",
+            "Polymer"
+          ],
+          "values": [
+            [ 64, 43, 73, 56, 62, 99 ]
+          ]
+        },
+        "soft": {
+          "keys": [
+            "Cultura", "Agile", "GIT", "Herramientas"
+          ],
+          "values": [
+            [ 65, 59, 85, 17 ]
+          ]
+        }
+      }
+    }
+  ]
+}
