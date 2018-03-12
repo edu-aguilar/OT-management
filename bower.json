@@ -18,7 +18,8 @@
     "app-storage": "^2.0.2",
     "paper-input": "^2.1.1",
     "iron-image": "^2.2.0",
-    "iron-icons": "PolymerElements/iron-icons#^2.1.1"
+    "iron-icons": "PolymerElements/iron-icons#^2.1.1",
+    "ability-chart": "yuanfux/ability-chart#^1.1.8"
   },
   "resolutions": {
     "polymer": "^2.0.0"
