@@ -27,7 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <h1>Dashboard</h1>
       <p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
       <p>Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Cu mei vide viris gloriatur, at populo eripuit sit.</p>
-      <button on-click="_changeRoute">Cambiar vista a candidates</button>
+      <button on-click="_changeRoute">Cambiar vista a detail</button>
 
       <ability-chart prop="[[chartProperties]]">
       </ability-chart>
@@ -106,7 +106,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var event = new CustomEvent(
           'change-route', { 
             detail:  { 
-              newRoute: 'candidates'
+              newRoute: 'detail'
             },
             composed: true
           }

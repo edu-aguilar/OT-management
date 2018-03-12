@@ -3,8 +3,7 @@
   "shell": "src/app-shell.html",
   "fragments": [
     "src/views/dashboard-view.html",
-    "src/views/candidates-view.html",
-    "src/views/questions-view.html",
+    "src/views/detail-view.html",
     "src/views/not-found-view.html"
   ],
   "sources": [
