@@ -1,36 +1,21 @@
-<!--
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../styles/shared-styles.html">
-<link rel="import" href="../../bower_components/ability-chart/ability-chart.html">
 
 <dom-module id="dashboard-view">
   <template>
     <style include="shared-styles">
       :host {
         display: block;
-
         padding: 10px;
       }
     </style>
 
     <div class="card">
-      <div class="circle">1</div>
-      <h1>Dashboard</h1>
-      <p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
-      <p>Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Cu mei vide viris gloriatur, at populo eripuit sit.</p>
-      <button on-click="_changeRoute">Cambiar vista a detail</button>
-
-      <ability-chart prop="[[chartProperties]]">
-      </ability-chart>
+      
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius iusto in eum recusandae, sint maiores ratione! Similique mollitia
+      eveniet possimus voluptatem labore repellat, accusamus rem sed! Nulla molestias ut culpa!</p>
+      
+      <button on-click="_changeRoute">change to person detail</button>
     </div>
 
   </template>
@@ -39,69 +24,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     class dashboardView extends (class extends Polymer.Element {}) {
       static get is() { return 'dashboard-view'; }
       
-      static get properties() {
-        return {
-          chartProperties: {
-            type: Object,
-            value: {
-              "dimension": 500,
-              "numLayer": 5,
-              "eachLayerStyle": [
-                {
-                  "fillColor": "#f5f5f5",
-                  "borderColor": "#bbbbbb"
-                },
-                {
-                  "fillColor": "#e6e6e6",
-                  "borderColor": "#bbbbbb"
-                },
-                {
-                  "fillColor": "#f5f5f5",
-                  "borderColor": "#bbbbbb"
-                },
-                {
-                  "fillColor": "#e6e6e6",
-                  "borderColor": "#bbbbbb"
-                },
-                {
-                  "fillColor": "#f5f5f5",
-                  "borderColor": "#bbbbbb"
-                }
-              ],
-              "labelFont": "13px Arial",
-              "labelFontColor": "#7a7a7a",
-              "labelOffset": 10,
-              "frameBorderWidth": 1,
-              "chartBorderWidth": 2,
-              "decorLineColor": "#bbbbbb",
-              "chartPortion": 0.75,
-              "chartAlpha": 0.95,
-              "scale": {
-                "font": "bold 12px Arial",
-                "fontColor": "black",
-                "offset": 12,
-                "scaleLabel": ["0", "20", "40", "60", "80", "100"]
-              },
-              "datasets": {
-                "keys": [
-                  "Strength", "Stamina", "Perception",
-                  "Creativity", "Charisma", "Confidence",
-                  "Spirituality", "Discipline", "Luck", "Humor",
-                  "Social Skill"
-                ],
-                "values": [
-                  [85, 39, 55, 77, 95, 84, 50, 90, 69, 80, 30],
-                  [30, 70, 5, 100, 86, 30, 60, 100, 77, 33, 18]
-                ],
-                "styles": [
-                  { "borderColor": "#334b5c" },
-                  { "borderColor": "#d53c37" }
-                ]
-              }
-          }
-          }
-        };
-      }
       _changeRoute() {
         var event = new CustomEvent(
           'change-route', { 

@@ -1,15 +1,6 @@
-<!--
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../styles/shared-styles.html">
+<link rel="import" href="../../bower_components/ability-chart/ability-chart.html">
 
 <dom-module id="detail-view">
   <template>
@@ -22,16 +13,81 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
 
     <div class="card">
-      <div class="circle">2</div>
-      <h1>Candidates View</h1>
-      <p>Ea duis bonorum nec, falli paulo aliquid ei eum.</p>
-      <p>Id nam odio natum malorum, tibique copiosae expetenda mel ea.Detracto suavitate repudiandae no eum. Id adhuc minim soluta nam.Id nam odio natum malorum, tibique copiosae expetenda mel ea.</p>
+     
+      <ability-chart prop="[[chartProperties]]">
+      </ability-chart>
+
     </div>
   </template>
 
   <script>
     class detailView extends (class extends Polymer.Element {}) {
       static get is() { return 'detail-view'; }
+
+      static get properties() {
+        return {
+          chartProperties: {
+            type: Object,
+            value: {
+              "dimension": 500,
+              "numLayer": 5,
+              "eachLayerStyle": [
+                {
+                  "fillColor": "#f5f5f5",
+                  "borderColor": "#bbbbbb"
+                },
+                {
+                  "fillColor": "#e6e6e6",
+                  "borderColor": "#bbbbbb"
+                },
+                {
+                  "fillColor": "#f5f5f5",
+                  "borderColor": "#bbbbbb"
+                },
+                {
+                  "fillColor": "#e6e6e6",
+                  "borderColor": "#bbbbbb"
+                },
+                {
+                  "fillColor": "#f5f5f5",
+                  "borderColor": "#bbbbbb"
+                }
+              ],
+              "labelFont": "13px Arial",
+              "labelFontColor": "#7a7a7a",
+              "labelOffset": 10,
+              "frameBorderWidth": 1,
+              "chartBorderWidth": 2,
+              "decorLineColor": "#bbbbbb",
+              "chartPortion": 0.75,
+              "chartAlpha": 0.95,
+              "scale": {
+                "font": "bold 12px Arial",
+                "fontColor": "black",
+                "offset": 12,
+                "scaleLabel": ["0", "20", "40", "60", "80", "100"]
+              },
+              "datasets": {
+                "keys": [
+                  "Strength", "Stamina", "Perception",
+                  "Creativity", "Charisma", "Confidence",
+                  "Spirituality", "Discipline", "Luck", "Humor",
+                  "Social Skill"
+                ],
+                "values": [
+                  [85, 39, 55, 77, 95, 84, 50, 90, 69, 80, 30],
+                  [30, 70, 5, 100, 86, 30, 60, 100, 77, 33, 18]
+                ],
+                "styles": [
+                  { "borderColor": "#334b5c" },
+                  { "borderColor": "#d53c37" }
+                ]
+              }
+            }
+          }
+        };
+      }
+      
     }
 
     window.customElements.define(detailView.is, detailView);
