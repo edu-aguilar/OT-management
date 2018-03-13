@@ -1,0 +1,132 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-image/iron-image.html">
+
+<dom-module id="user-item">
+  <template>
+    
+    <style>
+      :host {
+        display: flex;
+        width: 250px;
+        height: 250px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        border: solid 1px orange;
+        border-radius: 10px;
+        transition: 0.3s;
+        cursor: pointer;
+        padding: 10px;
+      }
+
+      :host(:hover) {
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+      }
+      
+      .user-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        flex-grow: 1;
+      }
+
+      iron-image {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+      }
+
+      .user-data {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      @media (min-width: 750px) {
+        :host {
+          width: 350px;
+          height: 150px;
+        }
+
+        .user-content {
+          flex-direction: row;
+        }
+
+        .user-content .user-data {
+          align-items: flex-start;
+        }
+      }
+
+    </style>
+
+    <div class="user-content">
+      <iron-image
+        src="[[data.image]]"
+        preload fade
+        alt="user image" class="sized" sizing="contain">
+      </iron-image>
+
+      <div class="user-data">
+        <span>[[data.name]]</span>
+        <span>[[data.age]]</span>
+        <span>[[data.mail]]</span>
+        <span>[[data.level]]</span>
+      </div>
+    </div>
+
+  </template>
+
+  <script>
+    /**
+     * `user-item` Description
+     *
+     * @summary ShortDescription.
+     * @customElement
+     * @polymer
+     * @extends {Polymer.Element}
+     */
+    class UserItem extends Polymer.Element {
+      /**
+       * String providing the tag name to register the element under.
+       */
+      static get is() {
+        return 'user-item';
+      }
+
+      /**
+       * Object describing property-related metadata used by Polymer features
+       */
+      static get properties() {
+        return {
+          data: {
+            type: Object,
+            value: () => ({})
+          }
+        };
+      }
+
+      /**
+       * Instance of the element is created/upgraded. Use: initializing state,
+       * set up event listeners, create shadow dom.
+       * @constructor
+       */
+      constructor() {
+        super();
+      }
+
+      /**
+       * Use for one-time configuration of your component after local DOM is initialized. 
+       */
+      ready() {
+        super.ready();
+
+        Polymer.RenderStatus.afterNextRender(this, function() {
+          
+        });
+      }
+
+    }
+
+    window.customElements.define(UserItem.is, UserItem);
+  </script>
+</dom-module>

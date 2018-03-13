@@ -1,4 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../components/user-item.html">
 <link rel="import" href="../styles/shared-styles.html">
 
 <dom-module id="dashboard-view">
@@ -8,6 +10,12 @@
         display: block;
         padding: 10px;
       }
+      .people-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        grid-gap: 1em;
+        justify-items: center;
+      }
     </style>
 
     <div class="card">
@@ -15,7 +23,14 @@
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius iusto in eum recusandae, sint maiores ratione! Similique mollitia
       eveniet possimus voluptatem labore repellat, accusamus rem sed! Nulla molestias ut culpa!</p>
       
+      <div class="people-list">
+        <template is="dom-repeat" items="[[people]]" as="person">
+          <user-item data="[[person]]"></user-item>
+        </template>
+      </div>
+      
       <button on-click="_changeRoute">change to person detail</button>
+      
     </div>
 
   </template>

@@ -1,11 +1,11 @@
 {
   "people": [
     {
-      "name": "Alfonso Gómez Castro",
+      "name": "Natalia Gómez Castro",
       "age": "35",
-      "mail": "alfonso.Gómez@domain.com",
+      "mail": "natalia.gomez@soprasteria.com",
       "level": "N3",
-      "image": "",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2oJS3HvA1Fu5Cu5m3RpT58DY_HzaWy5E7HUIuMtOjhn--Xoru",
       "skills": {
         "technical": {
           "keys": [
@@ -27,11 +27,11 @@
       }
     },
     {
-      "name": "Eduardo Cinabrio López",
+      "name": "Manuel Campos López",
       "age": "27",
-      "mail": "ecinabrio@domain.com",
+      "mail": "manuel.campos@soprasteria.com",
       "level": "N3",
-      "image": "",
+      "image": "https://www.usys.ethz.ch/content/specialinterest/usys/d-usys/en/departement/personen/profil.person_image.jpeg?persid=173335",
       "skills": {
         "technical": {
           "keys": [
