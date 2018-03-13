@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../styles/shared-styles.html">
 <link rel="import" href="../../bower_components/ability-chart/ability-chart.html">
+<link rel="import" href="../components/user-item.html">
 
 <dom-module id="detail-view">
   <template>
@@ -12,8 +13,8 @@
     </style>
 
     <div class="card">
-      
-      <p>traza: [[person.name]]</p>
+
+      <user-item data="[[person]]"></user-item>
 
       <ability-chart
         prop="[[chartProperties]]">
@@ -31,32 +32,25 @@
         return {
           person: {
             type: Object,
+            observer: '_onUserLoaded',
             value: () => ({})
           },
           chartProperties: {
             type: Object,
             value: {
               "dimension": 500,
-              "numLayer": 5,
+              "numLayer": 3,
               "eachLayerStyle": [
                 {
-                  "fillColor": "#f5f5f5",
+                  "fillColor": "#54ffac",
                   "borderColor": "#bbbbbb"
                 },
                 {
-                  "fillColor": "#e6e6e6",
+                  "fillColor": "#fcb853",
                   "borderColor": "#bbbbbb"
                 },
                 {
-                  "fillColor": "#f5f5f5",
-                  "borderColor": "#bbbbbb"
-                },
-                {
-                  "fillColor": "#e6e6e6",
-                  "borderColor": "#bbbbbb"
-                },
-                {
-                  "fillColor": "#f5f5f5",
+                  "fillColor": "#ff5959",
                   "borderColor": "#bbbbbb"
                 }
               ],
@@ -72,18 +66,11 @@
                 "font": "bold 12px Arial",
                 "fontColor": "black",
                 "offset": 12,
-                "scaleLabel": ["0", "20", "40", "60", "80", "100"]
+                "scaleLabel": ["0", "33", "66", "99"]
               },
               "datasets": {
-                "keys": [
-                  "Strength", "Stamina", "Perception",
-                  "Creativity", "Charisma", "Confidence",
-                  "Spirituality", "Discipline", "Luck", "Humor",
-                  "Social Skill"
-                ],
-                "values": [
-                  [85, 39, 55, 77, 95, 84, 50, 90, 69, 80, 30]
-                ],
+                "keys": [],
+                "values": [],
                 "styles": [
                   { "borderColor": "#334b5c" },
                   { "borderColor": "#d53c37" }
@@ -91,6 +78,25 @@
               }
             }
           }
+        }
+      }
+
+      /**
+       * Use for one-time configuration of your component after local DOM is initialized. 
+       */
+      ready() {
+        super.ready();
+
+        Polymer.RenderStatus.afterNextRender(this, function () {
+
+        });
+      }
+
+      _onUserLoaded(user) {
+        if (!!Object.keys(user).length) {
+          this.set('chartProperties.datasets.keys', this.person.skills.technical.keys);
+          this.set('chartProperties.datasets.values', this.person.skills.technical.values);
+          this.shadowRoot.querySelector('ability-chart').buildChart();
         }
       }
 
