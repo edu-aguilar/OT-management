@@ -97,8 +97,8 @@
             fallback-selection="not-found"
             role="main">
 
-          <dashboard-view name="dashboard" people="{{people}}"></dashboard-view>
-          <detail-view name="detail" people="[[people]]"></detail-view>
+          <dashboard-view name="dashboard" people="{{people}}" selected-user="{{selectedUser}}"></dashboard-view>
+          <detail-view name="detail" person="[[selectedUser]]"></detail-view>
           <not-found-view name="not-found"></not-found-view>
 
         </iron-pages>
@@ -130,6 +130,11 @@
           defaultView: {
             type: String,
             value: 'dashboard'
+          },
+          selectedUser: {
+            type: Object,
+            value: () => ({}),
+            observer: '_onSelectUser'
           }
         };
       }
@@ -145,6 +150,11 @@
         this.addEventListener('change-route', this._onRouteChange);
       }
 
+      _onSelectUser(user) {
+        if(!!Object.keys(user).length) {
+          this.set('route.path', 'detail');
+        }
+      }
       
       _onRouteChange(e) {
         /* This method will be fired when you request for change the current view programatically,

@@ -13,7 +13,7 @@
 
     <div class="card">
       
-      <p>longitud: [[people.length]]</p>
+      <p>traza: [[person.name]]</p>
 
       <ability-chart
         prop="[[chartProperties]]">
@@ -29,9 +29,9 @@
 
       static get properties() {
         return {
-          people: {
-            type: Array,
-            value: () => []
+          person: {
+            type: Object,
+            value: () => ({})
           },
           chartProperties: {
             type: Object,

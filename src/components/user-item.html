@@ -29,13 +29,13 @@
         flex-grow: 1;
       }
 
-      iron-image {
+      .user-content iron-image {
         width: 100px;
         height: 100px;
         border-radius: 50%;
       }
 
-      .user-data {
+      .user-content .user-data {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -59,7 +59,7 @@
 
     </style>
 
-    <div class="user-content">
+    <div class="user-content" on-click="_selectItem">
       <iron-image
         src="[[data.image]]"
         preload fade
@@ -101,8 +101,17 @@
           data: {
             type: Object,
             value: () => ({})
+          },
+          selectedUser: {
+            type: Object,
+            notify: true,
+            value: () => ({})
           }
         };
+      }
+      
+      _selectItem() {
+        this.set('selectedUser', this.data);
       }
 
       /**

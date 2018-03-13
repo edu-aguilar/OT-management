@@ -25,7 +25,7 @@
       
       <div class="people-list">
         <template is="dom-repeat" items="[[people]]" as="person">
-          <user-item data="[[person]]"></user-item>
+          <user-item data="[[person]]" selected-user="{{selectedUser}}"></user-item>
         </template>
       </div>
       
@@ -46,6 +46,11 @@
             type: Array,
             notify: true,
             value: () => []
+          },
+          selectedUser: {
+            type: Object,
+            notify: true,
+            value: () => ({})
           }
         }
       }
