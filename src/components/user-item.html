@@ -113,6 +113,7 @@
       }
       
       _selectItem() {
+        this.set('selectedUser', {});//workaround to trigger the observer on app-shell.
         this.set('selectedUser', this.data);
       }
 
