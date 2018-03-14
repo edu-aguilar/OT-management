@@ -73,7 +73,7 @@
             observer: '_onUserLoaded',
             value: () => ({})
           },
-          technicalChartProperties: {
+          commonChartProperties: {
             type: Object,
             value: {
               "dimension": 400,
@@ -116,48 +116,13 @@
               }
             }
           },
+          technicalChartProperties: {
+            type: Object,
+            value: () => ({})
+          },
           softChartProperties: {
             type: Object,
-            value: {
-              "dimension": 400,
-              "numLayer": 3,
-              "eachLayerStyle": [
-                {
-                  "fillColor": "#54ffac",
-                  "borderColor": "#bbbbbb"
-                },
-                {
-                  "fillColor": "#fcb853",
-                  "borderColor": "#bbbbbb"
-                },
-                {
-                  "fillColor": "#ff5959",
-                  "borderColor": "#bbbbbb"
-                }
-              ],
-              "labelFont": "13px Arial",
-              "labelFontColor": "#7a7a7a",
-              "labelOffset": 10,
-              "frameBorderWidth": 1,
-              "chartBorderWidth": 2,
-              "decorLineColor": "#bbbbbb",
-              "chartPortion": 0.75,
-              "chartAlpha": 0.95,
-              "scale": {
-                "font": "bold 12px Arial",
-                "fontColor": "black",
-                "offset": 12,
-                "scaleLabel": ["0", "33", "66", "99"]
-              },
-              "datasets": {
-                "keys": [],
-                "values": [],
-                "styles": [
-                  { "borderColor": "#334b5c" },
-                  { "borderColor": "#d53c37" }
-                ]
-              }
-            }
+            value: () => ({})
           }
         }
       }
@@ -167,7 +132,7 @@
        */
       ready() {
         super.ready();
-
+        
         Polymer.RenderStatus.afterNextRender(this, function () {
 
         });
@@ -175,13 +140,25 @@
 
       _onUserLoaded(user) {
         if (!!Object.keys(user).length) {
-          this.set('technicalChartProperties.datasets.keys', this.person.skills.technical.keys);
-          this.set('technicalChartProperties.datasets.values', this.person.skills.technical.values);
-          this.set('softChartProperties.datasets.keys', this.person.skills.soft.keys);
-          this.set('softChartProperties.datasets.values', this.person.skills.soft.values);
-          this.shadowRoot.querySelector('#technicalChart').buildChart();
-          this.shadowRoot.querySelector('#softChart').buildChart();
+          this._initChartProperties();
+          this._initChartValues('technicalChartProperties', 'technical');
+          this._initChartValues('softChartProperties', 'soft');
+          this._drawCharts(['#technicalChart', '#softChart']);
         }
+      }
+
+      _initChartProperties() {
+        this.set('technicalChartProperties', JSON.parse(JSON.stringify(this.commonChartProperties)));
+        this.set('softChartProperties', JSON.parse(JSON.stringify(this.commonChartProperties)));
+      }
+
+      _initChartValues(property, type) {
+        this.set(`${property}.datasets.keys`, this.person.skills[type].keys);
+        this.set(`${property}.datasets.values`, this.person.skills[type].values);
+      }
+
+      _drawCharts(charts) {
+        charts.map((chartName) => this.shadowRoot.querySelector(chartName).buildChart());
       }
 
     }
