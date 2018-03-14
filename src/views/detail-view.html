@@ -10,15 +10,53 @@
         display: block;
         padding: 10px;
       }
+
+      .card {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      .card user-item {
+        --user-item: {
+          border: none;
+          box-shadow: none;
+          cursor: default;
+        }
+        --user-item-hover: {
+          box-shadow: none;
+        }
+      }
+
+      .card .chart-wrapper {
+        display: flex;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+        width: 100%;
+      }
+
+      @media (min-width: 750px) {
+        .card {
+          align-items: flex-start;
+        }
+      }
+
     </style>
 
     <div class="card">
 
       <user-item data="[[person]]"></user-item>
 
-      <ability-chart
-        prop="[[chartProperties]]">
-      </ability-chart>
+      <div class="chart-wrapper">
+
+        <ability-chart id="technicalChart" prop="[[technicalChartProperties]]">
+        </ability-chart>
+
+        <ability-chart id="softChart" prop="[[softChartProperties]]">
+        </ability-chart>
+
+      </div>
+      
 
     </div>
   </template>
@@ -35,10 +73,53 @@
             observer: '_onUserLoaded',
             value: () => ({})
           },
-          chartProperties: {
+          technicalChartProperties: {
             type: Object,
             value: {
-              "dimension": 500,
+              "dimension": 400,
+              "numLayer": 3,
+              "eachLayerStyle": [
+                {
+                  "fillColor": "#54ffac",
+                  "borderColor": "#bbbbbb"
+                },
+                {
+                  "fillColor": "#fcb853",
+                  "borderColor": "#bbbbbb"
+                },
+                {
+                  "fillColor": "#ff5959",
+                  "borderColor": "#bbbbbb"
+                }
+              ],
+              "labelFont": "13px Arial",
+              "labelFontColor": "#7a7a7a",
+              "labelOffset": 10,
+              "frameBorderWidth": 1,
+              "chartBorderWidth": 2,
+              "decorLineColor": "#bbbbbb",
+              "chartPortion": 0.75,
+              "chartAlpha": 0.95,
+              "scale": {
+                "font": "bold 12px Arial",
+                "fontColor": "black",
+                "offset": 12,
+                "scaleLabel": ["0", "33", "66", "99"]
+              },
+              "datasets": {
+                "keys": [],
+                "values": [],
+                "styles": [
+                  { "borderColor": "#334b5c" },
+                  { "borderColor": "#d53c37" }
+                ]
+              }
+            }
+          },
+          softChartProperties: {
+            type: Object,
+            value: {
+              "dimension": 400,
               "numLayer": 3,
               "eachLayerStyle": [
                 {
@@ -94,9 +175,12 @@
 
       _onUserLoaded(user) {
         if (!!Object.keys(user).length) {
-          this.set('chartProperties.datasets.keys', this.person.skills.technical.keys);
-          this.set('chartProperties.datasets.values', this.person.skills.technical.values);
-          this.shadowRoot.querySelector('ability-chart').buildChart();
+          this.set('technicalChartProperties.datasets.keys', this.person.skills.technical.keys);
+          this.set('technicalChartProperties.datasets.values', this.person.skills.technical.values);
+          this.set('softChartProperties.datasets.keys', this.person.skills.soft.keys);
+          this.set('softChartProperties.datasets.values', this.person.skills.soft.values);
+          this.shadowRoot.querySelector('#technicalChart').buildChart();
+          this.shadowRoot.querySelector('#softChart').buildChart();
         }
       }
 
