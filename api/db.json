@@ -1,58 +1,46 @@
 {
-  "people": [
+  "participants": [
     {
-      "id": "1",
+      "id": 1,
       "name": "Natalia Gómez Castro",
       "age": "35",
       "mail": "natalia.gomez@soprasteria.com",
       "level": "N3",
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2oJS3HvA1Fu5Cu5m3RpT58DY_HzaWy5E7HUIuMtOjhn--Xoru",
-      "skills": {
-        "technical": {
-          "keys": [
-            "HTML5", "CSS3", "JavaScript", "EcmaScript6", "Web components",
-            "Polymer"
-          ],
-          "values": [
-            [ 54, 23, 83, 76, 82, 79 ]
-          ]
-        },
-        "soft": {
-          "keys": [
-            "Cultura", "Agile", "GIT", "Herramientas"
-          ],
-          "values": [
-            [ 85, 39, 55, 77 ]
-          ]
-        }
-      }
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2oJS3HvA1Fu5Cu5m3RpT58DY_HzaWy5E7HUIuMtOjhn--Xoru"
     },
     {
-      "id": "2",
+      "id": 2,
       "name": "Manuel Campos López",
       "age": "27",
       "mail": "manuel.campos@soprasteria.com",
       "level": "N3",
-      "image": "https://www.usys.ethz.ch/content/specialinterest/usys/d-usys/en/departement/personen/profil.person_image.jpeg?persid=173335",
-      "skills": {
-        "technical": {
-          "keys": [
-            "HTML5", "CSS3", "JavaScript", "EcmaScript6", "Web components",
-            "Polymer"
-          ],
-          "values": [
-            [ 64, 43, 73, 56, 62, 99 ]
-          ]
-        },
-        "soft": {
-          "keys": [
-            "Cultura", "Agile", "GIT", "Herramientas"
-          ],
-          "values": [
-            [ 65, 59, 85, 17 ]
-          ]
-        }
-      }
+      "image": "https://www.usys.ethz.ch/content/specialinterest/usys/d-usys/en/departement/personen/profil.person_image.jpeg?persid=173335"
+    }
+  ],
+  "skills": [
+    {
+      "id": 2,
+      "description": "CSS3",
+      "type": "TECHNICAL",
+      "percentage": 60,
+      "comment": "Esto es un comentario para CSS",
+      "participantId": 1
+    },
+    {
+      "id": 3,
+      "description": "JS",
+      "type": "TECHNICAL",
+      "percentage": 60,
+      "comment": "Esto es un comentario para JS",
+      "participantId": 1
+    },
+    {
+      "id": 4,
+      "description": "HTML5",
+      "type": "TECHNICAL",
+      "percentage": 80,
+      "comment": "Esto es un comentario para HTML",
+      "participantId": 2
     }
   ]
 }

@@ -20,7 +20,7 @@
   "scripts": {
     "start": "concurrently \"npm run polymer-serve\" \"npm run json-server\"",
     "polymer-serve": "polymer serve -o --proxy-path api --proxy-target http://localhost:3000",
-    "json-server": "json-server --no-cors --watch api/db.json",
+    "json-server": "json-server --no-cors --watch api/db.json --routes api/routes.json",
     "lint": "npm run lint:javascript && polymer lint",
     "lint:javascript": "eslint . --ext js,html",
     "test": "polymer test -l chrome",

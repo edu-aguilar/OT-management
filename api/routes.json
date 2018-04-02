@@ -1,0 +1,3 @@
+{
+  "/participants/:id": "/participants/:id?_embed=skills"
+}
