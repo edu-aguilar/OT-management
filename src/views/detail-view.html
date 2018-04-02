@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../styles/shared-styles.html">
 <link rel="import" href="../../bower_components/ability-chart/ability-chart.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-if.html">
 <link rel="import" href="../components/user-item.html">
 
 <dom-module id="detail-view">
@@ -47,15 +48,19 @@
 
       <user-item data="[[person]]"></user-item>
 
-      <div class="chart-wrapper">
+      <p>traza: [[skillsReady]]</p>
 
-        <ability-chart id="technicalChart" prop="[[technicalChartProperties]]">
-        </ability-chart>
-
-        <ability-chart id="softChart" prop="[[softChartProperties]]">
-        </ability-chart>
-
-      </div>
+      <template is="dom-if" if="{{_areSkillsReady(skillsReady)}}">
+        <div class="chart-wrapper">
+        
+          <ability-chart id="technicalChart" prop="[[technicalChartProperties]]">
+          </ability-chart>
+        
+          <ability-chart id="softChart" prop="[[softChartProperties]]">
+          </ability-chart>
+        
+        </div>
+      </template>
       
 
     </div>
@@ -123,6 +128,10 @@
           softChartProperties: {
             type: Object,
             value: () => ({})
+          },
+          skillsReady: {
+            type: Boolean,
+            value: false
           }
         }
       }
@@ -138,12 +147,20 @@
         });
       }
 
+      _areSkillsReady(skillsReady) {
+        return skillsReady;
+      }
+
       _onUserLoaded(user) {
         if (!!Object.keys(user).length) {
           this._initChartProperties();
           this._initChartValues('technicalChartProperties', 'technical');
           this._initChartValues('softChartProperties', 'soft');
-          this._drawCharts(['#technicalChart', '#softChart']);
+          this.skillsReady = true;
+          //workaround because I dont know when ability-chart is built;
+          setTimeout(() => {
+            this._drawCharts(['#technicalChart', '#softChart']);
+          }, 0);
         }
       }
 

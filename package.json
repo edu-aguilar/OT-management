@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "devDependencies": {
     "bower": "^1.7.0",
+    "concurrently": "^3.5.1",
     "css-slam": "^2.0.2",
     "eslint": "^3.19.0",
     "eslint-config-google": "^0.7.0",
@@ -13,11 +14,13 @@
     "gulp-if": "^2.0.2",
     "gulp-uglify": "^3.0.0",
     "http-server": "^0.11.1",
+    "json-server": "^0.12.1",
     "polymer-build": "^2.2.0"
   },
   "scripts": {
-    "postinstall": "bower install && node node_modules/gulp/bin/gulp.js build",
-    "start": "node node_modules/http-server/bin/http-server build",
+    "start": "concurrently \"npm run polymer-serve\" \"npm run json-server\"",
+    "polymer-serve": "polymer serve -o --proxy-path api --proxy-target http://localhost:3000",
+    "json-server": "json-server --no-cors --watch api/db.json",
     "lint": "npm run lint:javascript && polymer lint",
     "lint:javascript": "eslint . --ext js,html",
     "test": "polymer test -l chrome",

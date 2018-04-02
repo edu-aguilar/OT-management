@@ -1,6 +1,7 @@
 {
   "people": [
     {
+      "id": "1",
       "name": "Natalia Gómez Castro",
       "age": "35",
       "mail": "natalia.gomez@soprasteria.com",
@@ -27,6 +28,7 @@
       }
     },
     {
+      "id": "2",
       "name": "Manuel Campos López",
       "age": "27",
       "mail": "manuel.campos@soprasteria.com",

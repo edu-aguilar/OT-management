@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../components/user-item.html">
 <link rel="import" href="../styles/shared-styles.html">
 
@@ -23,6 +24,12 @@
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius iusto in eum recusandae, sint maiores ratione! Similique mollitia
       eveniet possimus voluptatem labore repellat, accusamus rem sed! Nulla molestias ut culpa!</p>
       
+      <iron-ajax
+        url="/api/people"
+        handle-as="json"
+        on-response="_onLoadPeople">
+      </iron-ajax>
+
       <div class="people-list">
         <template is="dom-repeat" items="[[people]]" as="person">
           <user-item data="[[person]]" selected-user="{{selectedUser}}"></user-item>
@@ -70,18 +77,12 @@
 
       ready() {
         super.ready();
-        this._loadPeople();
+        this.shadowRoot.querySelector('iron-ajax').generateRequest();
       }
-
-      _loadPeople() {
-        let url = 'data/people.json';
-        fetch(url)
-          .then((resp) => resp.json())
-          .then((data) => {
-            this.set('people', data.people);
-          })
-          .catch(() => { console.error('error loading people.json') });
       
+      _onLoadPeople(event) {
+        let people = event.target.lastResponse;
+        this.set('people', people);
       }
     }
 
