@@ -20,6 +20,14 @@
   "skills": [
     {
       "id": 2,
+      "description": "HTML5",
+      "type": "TECHNICAL",
+      "percentage": 80,
+      "comment": "Esto es un comentario para HTML",
+      "participantId": 1
+    },
+    {
+      "id": 3,
       "description": "CSS3",
       "type": "TECHNICAL",
       "percentage": 60,
@@ -27,19 +35,131 @@
       "participantId": 1
     },
     {
-      "id": 3,
+      "id": 4,
       "description": "JS",
       "type": "TECHNICAL",
-      "percentage": 60,
+      "percentage": 70,
       "comment": "Esto es un comentario para JS",
       "participantId": 1
     },
     {
-      "id": 4,
-      "description": "HTML5",
+      "id": 5,
+      "description": "ES6",
       "type": "TECHNICAL",
       "percentage": 80,
+      "comment": "Esto es un comentario para EcmaScript6",
+      "participantId": 1
+    },
+    {
+      "id": 6,
+      "description": "Web Components",
+      "type": "TECHNICAL",
+      "percentage": 40,
+      "comment": "Esto es un comentario para Web Components",
+      "participantId": 1
+    },
+    {
+      "id": 7,
+      "description": "Cultura",
+      "type": "SOFT",
+      "percentage": 60,
+      "comment": "Esto es un comentario para CULTURA",
+      "participantId": 1
+    },
+    {
+      "id": 8,
+      "description": "Agile",
+      "type": "SOFT",
+      "percentage": 70,
+      "comment": "Esto es un comentario para AGILE",
+      "participantId": 1
+    },
+    {
+      "id": 9,
+      "description": "GIT",
+      "type": "SOFT",
+      "percentage": 80,
+      "comment": "Esto es un comentario para GIT",
+      "participantId": 1
+    },
+    {
+      "id": 10,
+      "description": "Herramientas",
+      "type": "SOFT",
+      "percentage": 40,
+      "comment": "Esto es un comentario para herramientas",
+      "participantId": 1
+    },
+    {
+      "id": 11,
+      "description": "HTML5",
+      "type": "TECHNICAL",
+      "percentage": 60,
       "comment": "Esto es un comentario para HTML",
+      "participantId": 2
+    },
+    {
+      "id": 12,
+      "description": "CSS3",
+      "type": "TECHNICAL",
+      "percentage": 50,
+      "comment": "Esto es un comentario para CSS",
+      "participantId": 2
+    },
+    {
+      "id": 13,
+      "description": "JS",
+      "type": "TECHNICAL",
+      "percentage": 30,
+      "comment": "Esto es un comentario para JS",
+      "participantId": 2
+    },
+    {
+      "id": 14,
+      "description": "ES6",
+      "type": "TECHNICAL",
+      "percentage": 40,
+      "comment": "Esto es un comentario para EcmaScript6",
+      "participantId": 2
+    },
+    {
+      "id": 15,
+      "description": "Web Components",
+      "type": "TECHNICAL",
+      "percentage": 20,
+      "comment": "Esto es un comentario para Web Components",
+      "participantId": 2
+    },
+    {
+      "id": 17,
+      "description": "Cultura",
+      "type": "SOFT",
+      "percentage": 30,
+      "comment": "Esto es un comentario para CULTURA",
+      "participantId": 2
+    },
+    {
+      "id": 18,
+      "description": "Agile",
+      "type": "SOFT",
+      "percentage": 35,
+      "comment": "Esto es un comentario para AGILE",
+      "participantId": 2
+    },
+    {
+      "id": 19,
+      "description": "GIT",
+      "type": "SOFT",
+      "percentage": 40,
+      "comment": "Esto es un comentario para GIT",
+      "participantId": 2
+    },
+    {
+      "id": 20,
+      "description": "Herramientas",
+      "type": "SOFT",
+      "percentage": 20,
+      "comment": "Esto es un comentario para herramientas",
       "participantId": 2
     }
   ]

@@ -3,6 +3,7 @@
 <link rel="import" href="../../bower_components/ability-chart/ability-chart.html">
 <link rel="import" href="../../bower_components/polymer/lib/elements/dom-if.html">
 <link rel="import" href="../components/user-item.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 
 <dom-module id="detail-view">
   <template>
@@ -48,7 +49,11 @@
 
       <user-item data="[[person]]"></user-item>
 
-      <p>traza: [[skillsReady]]</p>
+      <iron-ajax
+        url="[[endpointUrl]]"
+        handle-as="json"
+        on-response="_onLoadParticipantdetail">
+      </iron-ajax>
 
       <template is="dom-if" if="{{_areSkillsReady(skillsReady)}}">
         <div class="chart-wrapper">
@@ -153,15 +158,42 @@
 
       _onUserLoaded(user) {
         if (!!Object.keys(user).length) {
-          this._initChartProperties();
-          this._initChartValues('technicalChartProperties', 'technical');
-          this._initChartValues('softChartProperties', 'soft');
-          this.skillsReady = true;
-          //workaround because I dont know when ability-chart is built;
-          setTimeout(() => {
-            this._drawCharts(['#technicalChart', '#softChart']);
-          }, 0);
+          this.endpointUrl = `/api/participants/${user.id}`;
+          this.shadowRoot.querySelector('iron-ajax').generateRequest();
         }
+      }
+
+      _onLoadParticipantdetail(event) {
+        this._initChartProperties();
+        this._initChartValues(event.target.lastResponse.skills);
+        this.skillsReady = true;
+        //workaround because I dont know when ability-chart is built;
+        setTimeout(() => {
+          this._drawCharts(['#technicalChart', '#softChart']);
+        }, 0);
+      }
+      
+      _formatSkillsResponse(skills) {
+        let filteredSkills = {
+          softSkills: {
+            keys: [],
+            values: [[]]
+          },
+          technicalSkills: {
+            keys: [],
+            values: [[]]
+          }
+        };
+        skills.forEach(skill => {
+          if(skill.type === 'SOFT') {
+            filteredSkills.softSkills.keys.push(skill.description);
+            filteredSkills.softSkills.values[0].push(skill.percentage);
+          } else {
+            filteredSkills.technicalSkills.keys.push(skill.description);
+            filteredSkills.technicalSkills.values[0].push(skill.percentage);
+          }
+        });
+        return filteredSkills;
       }
 
       _initChartProperties() {
@@ -169,9 +201,12 @@
         this.set('softChartProperties', JSON.parse(JSON.stringify(this.commonChartProperties)));
       }
 
-      _initChartValues(property, type) {
-        this.set(`${property}.datasets.keys`, this.person.skills[type].keys);
-        this.set(`${property}.datasets.values`, this.person.skills[type].values);
+      _initChartValues(skills) {
+        let filteredSkills = this._formatSkillsResponse(skills);
+        this.set('technicalChartProperties.datasets.keys', filteredSkills.technicalSkills.keys);
+        this.set('technicalChartProperties.datasets.values', filteredSkills.technicalSkills.values);
+        this.set('softChartProperties.datasets.keys', filteredSkills.softSkills.keys);
+        this.set('softChartProperties.datasets.values', filteredSkills.softSkills.values);
       }
 
       _drawCharts(charts) {
