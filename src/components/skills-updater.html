@@ -1,0 +1,148 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/iron-form/iron-form.html">
+
+<dom-module id="skills-updater">
+  <template>
+    <style>
+      :host {
+        display: block
+      }
+
+      paper-button {
+        background-color: #cd0b32;
+        color: white;
+        display: block;
+        margin: 1rem auto;
+        width: 8rem;
+        text-align: center;
+      }
+
+      paper-button[disabled] {
+        opacity: 0.3;
+      }
+    </style>
+
+    <iron-ajax
+      url="[[updateEndpoint]]"
+      handle-as="json"
+      content-type="application/json"
+      method="PUT"
+      on-response="_onSkillsUpdated">
+    </iron-ajax>
+
+    <iron-form id="updaterForm">
+      <form>
+        <template is="dom-repeat" items="{{skills}}" as="skill">
+          <paper-input 
+            label="[[skill.description]]" 
+            auto-validate pattern="[0-9]*"
+            minlength="1" maxlength="2"
+            error-message="Sólo valor numérico entre 0 y 99"
+            value="{{skill.percentage}}"
+            required>
+          </paper-input>
+        </template>
+      </form>
+    </iron-form>
+    
+    <paper-button on-click="_updateSkills" disabled$="{{!isValid}}">Actualizar</paper-button>
+
+  </template>
+
+  <script>
+    /**º
+     * `skills-updater` Description
+     *
+     * @summary ShortDescription.
+     * @customElement
+     * @polymer
+     * @extends {Polymer.Element}
+     */
+    class SkillsUpdater extends Polymer.Element {
+      /**
+       * String providing the tag name to register the element under.
+       */
+      static get is() {
+        return 'skills-updater';
+      }
+      
+      static get observers() {
+        return [
+          '_checkFormValid(skills.*)'
+        ];
+      }
+
+      /**
+       * Object describing property-related metadata used by Polymer features
+       */
+      static get properties() {
+        return {
+          updateEndpoint: {
+            type: String,
+            computed: '_computeUpdateEndpoint(person)'
+          },
+          skills: {
+            type: Array,
+            value: () => []
+          }
+        };
+      }
+
+      /**
+       * Instance of the element is created/upgraded. Use: initializing state,
+       * set up event listeners, create shadow dom.
+       * @constructor
+       */
+      constructor() {
+        super();
+      }
+
+      /**
+       * Use for one-time configuration of your component after local DOM is initialized. 
+       */
+      ready() {
+        super.ready();
+
+        Polymer.RenderStatus.afterNextRender(this, function() {
+          //console.log(this.skills);
+        });
+      }
+      
+      _computeUpdateEndpoint(person) {
+        return `/api/participants/${person.id}/skill`
+      }
+
+      _checkFormValid(skill) {
+        this.isValid = this.shadowRoot.querySelector('#updaterForm').validate();
+      }
+
+      _onSkillsUpdated(event) {
+        console.log('skills updatedd');
+        var event = new CustomEvent(
+          'updated-skills', {
+            detail: {
+              type: this.skills[0].type,
+              skills: this.skills
+            },
+            composed: true
+          }
+        );
+
+        this.dispatchEvent(event);
+      }
+
+      _updateSkills() {
+        let ironAjax = this.shadowRoot.querySelector('iron-ajax');
+        //ironAjax.setAttribute('body', JSON.stringify(this.skills[0]));
+        //ironAjax.generateRequest();
+        this._onSkillsUpdated({});
+      }
+    }
+
+    window.customElements.define(SkillsUpdater.is, SkillsUpdater);
+  </script>
+</dom-module>

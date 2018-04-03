@@ -1,3 +1,4 @@
 {
-  "/participants/:id": "/participants/:id?_embed=skills"
+  "/participants/:id": "/participants/:id?_embed=skills",
+  "/participants/:id/skill": "/skills/:id"
 }

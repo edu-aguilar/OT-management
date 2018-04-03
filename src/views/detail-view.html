@@ -4,6 +4,8 @@
 <link rel="import" href="../../bower_components/polymer/lib/elements/dom-if.html">
 <link rel="import" href="../components/user-item.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-expansion-panel/paper-expansion-panel.html">
+<link rel="import" href="../components/skills-updater.html">
 
 <dom-module id="detail-view">
   <template>
@@ -37,6 +39,19 @@
         width: 100%;
       }
 
+      user-item, .chart-container {
+        animation: fadeIn ease 2s;
+      }
+
+      @keyframes fadeIn{
+        0% {
+          opacity:0;
+        }
+        100% {
+          opacity:1;
+        }
+      }
+
       @media (min-width: 750px) {
         .card {
           align-items: flex-start;
@@ -47,7 +62,7 @@
 
     <div class="card">
 
-      <user-item data="[[person]]"></user-item>
+      <user-item class="fade-in" data="[[person]]"></user-item>
 
       <iron-ajax
         url="[[endpointUrl]]"
@@ -57,13 +72,22 @@
 
       <template is="dom-if" if="{{_areSkillsReady(skillsReady)}}">
         <div class="chart-wrapper">
-        
-          <ability-chart id="technicalChart" prop="[[technicalChartProperties]]">
-          </ability-chart>
-        
-          <ability-chart id="softChart" prop="[[softChartProperties]]">
-          </ability-chart>
-        
+          
+          <div class="chart-container">
+            <ability-chart class="fade-in" id="technicalChart" prop="[[technicalChartProperties]]">
+            </ability-chart>
+            <paper-expansion-panel header="Skills técnicas">
+              <skills-updater skills="[[technicalSkills]]" person="[[person]]"></skills-updater>
+            </paper-expansion-panel>
+          </div>  
+          
+          <div class="chart-container">
+            <ability-chart id="softChart" prop="[[softChartProperties]]">
+            </ability-chart>
+            <paper-expansion-panel header="Skills soft">
+              <skills-updater skills="[[softSkills]]" person="[[person]]"></skills-updater>
+            </paper-expansion-panel>
+          </div>
         </div>
       </template>
       
@@ -137,6 +161,14 @@
           skillsReady: {
             type: Boolean,
             value: false
+          },
+          softSkills: {
+            type: Array,
+            value: () => []
+          },
+          technicalSkills: {
+            type: Array,
+            value: () => []
           }
         }
       }
@@ -148,7 +180,7 @@
         super.ready();
         
         Polymer.RenderStatus.afterNextRender(this, function () {
-
+          this.addEventListener('updated-skills', this._updateChart);
         });
       }
 
@@ -160,12 +192,20 @@
         if (!!Object.keys(user).length) {
           this.endpointUrl = `/api/participants/${user.id}`;
           this.shadowRoot.querySelector('iron-ajax').generateRequest();
+          this.set('softSkills', []);
+          this.set('technicalSkills', []);
         }
       }
 
       _onLoadParticipantdetail(event) {
+        let skills = event.target.lastResponse.skills;
+        this._processChartData(skills);
+      }
+
+      _processChartData(skills) {
         this._initChartProperties();
-        this._initChartValues(event.target.lastResponse.skills);
+        this._initSkillsUpdater(skills);
+        this._initChartValues(skills);
         this.skillsReady = true;
         //workaround because I dont know when ability-chart is built;
         setTimeout(() => {
@@ -195,6 +235,10 @@
         });
         return filteredSkills;
       }
+      
+      _initSkillsUpdater(skills) {
+        skills.forEach((skill) => skill.type === 'SOFT' ? this.push('softSkills', skill) : this.push('technicalSkills', skill));
+      }
 
       _initChartProperties() {
         this.set('technicalChartProperties', JSON.parse(JSON.stringify(this.commonChartProperties)));
@@ -211,6 +255,17 @@
 
       _drawCharts(charts) {
         charts.map((chartName) => this.shadowRoot.querySelector(chartName).buildChart());
+      }
+
+      _updateChart(event) {
+        const type = event.detail.type;
+        const skills = event.detail.skills;
+        if(type === 'SOFT') {
+          this.set('softSkills', []);
+        } else {
+          this.set('technicalSkills', []);
+        }
+        this._processChartData(skills);
       }
 
     }
