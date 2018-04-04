@@ -19,20 +19,16 @@
       }
     </style>
 
-    <div class="card">
+    <iron-ajax
+      url="/api/participants"
+      handle-as="json"
+      on-response="_onLoadPeople">
+    </iron-ajax>
 
-      <iron-ajax
-        url="/api/participants"
-        handle-as="json"
-        on-response="_onLoadPeople">
-      </iron-ajax>
-
-      <div class="people-list">
-        <template is="dom-repeat" items="[[people]]" as="person">
-          <user-item data="[[person]]" selected-user="{{selectedUser}}"></user-item>
-        </template>
-      </div>
- 
+    <div class="people-list">
+      <template is="dom-repeat" items="[[people]]" as="person">
+        <user-item data="[[person]]" selected-user="{{selectedUser}}"></user-item>
+      </template>
     </div>
 
   </template>

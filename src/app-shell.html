@@ -16,9 +16,11 @@
 <link rel="lazy-import" href="views/detail-view.html">
 <link rel="lazy-import" href="views/not-found-view.html">
 
+<link rel="import" href="styles/shared-styles.html">
+
 <dom-module id="app-shell">
   <template>
-    <style>
+    <style include="shared-styles">
       :host {
         --app-primary-color: #cd0b32;
         --app-secondary-color: black;

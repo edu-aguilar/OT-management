@@ -14,8 +14,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="shared-styles">
   <template>
     <style>
-      .card {
-        /*add global styles here*/
+      iron-pages {
+        height: 100%;
+      }
+      iron-pages > * {
+        background-color: white;
+        height: 100%;
+        box-sizing: border-box;
+        overflow-y: auto;
       }
       
     </style>

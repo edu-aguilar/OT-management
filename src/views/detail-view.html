@@ -15,13 +15,13 @@
         padding: 10px;
       }
 
-      .card {
+      .main-wrapper {
         display: flex;
         align-items: center;
         flex-direction: column;
       }
 
-      .card user-item {
+      .main-wrapper user-item {
         --user-item: {
           border: none;
           box-shadow: none;
@@ -32,7 +32,7 @@
         }
       }
 
-      .card .chart-wrapper {
+      .main-wrapper .chart-wrapper {
         display: flex;
         justify-content: space-evenly;
         flex-wrap: wrap;
@@ -53,14 +53,14 @@
       }
 
       @media (min-width: 750px) {
-        .card {
+        .main-wrapper {
           align-items: flex-start;
         }
       }
 
     </style>
 
-    <div class="card">
+    <div class="main-wrapper">
 
       <user-item class="fade-in" data="[[person]]"></user-item>
 
@@ -90,9 +90,9 @@
           </div>
         </div>
       </template>
-      
 
     </div>
+      
   </template>
 
   <script>
