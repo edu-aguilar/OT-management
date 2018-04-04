@@ -97,6 +97,7 @@
             fallback-selection="not-found"
             role="main">
 
+          <landing-view name="landing"></landing-view>
           <dashboard-view name="dashboard" people="{{people}}" selected-user="{{selectedUser}}"></dashboard-view>
           <detail-view name="detail" person="[[selectedUser]]"></detail-view>
           <not-found-view name="not-found"></not-found-view>
@@ -129,7 +130,7 @@
           rootPath: String,
           defaultView: {
             type: String,
-            value: 'dashboard'
+            value: 'landing'
           },
           selectedUser: {
             type: Object,
