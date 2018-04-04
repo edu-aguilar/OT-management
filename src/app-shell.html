@@ -65,42 +65,54 @@
         url-space-regex="^[[rootPath]]">
     </app-location>
 
-    <app-route
+    <template is="dom-if" if="{{userLogedIn}}">
+      <app-route
         route="{{route}}"
         pattern="[[rootPath]]:page"
         data="{{routeData}}"
         tail="{{subroute}}">
-    </app-route>
+      </app-route>
+    </template>
 
     <app-drawer-layout fullbleed narrow="{{narrow}}">
       <!-- Drawer content -->
-      <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
-        <app-toolbar>Menu</app-toolbar>
-        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="dashboard" href="[[rootPath]]dashboard">Dashboard</a>
-        </iron-selector>
-      </app-drawer>
+
+      <template is="dom-if" if="{{userLogedIn}}">
+        <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
+          <app-toolbar>Menu</app-toolbar>
+          <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+            <a name="dashboard" href="[[rootPath]]dashboard">Dashboard</a>
+          </iron-selector>
+        </app-drawer>
+      </template>
 
       <!-- Main content -->
       <app-header-layout has-scrolling-region>
 
         <app-header slot="header" condenses reveals effects="waterfall">
           <app-toolbar>
-            <paper-icon-button icon="icons:menu" drawer-toggle></paper-icon-button>
+            <template is="dom-if" if="{{userLogedIn}}">
+              <paper-icon-button icon="icons:menu" drawer-toggle></paper-icon-button>
+            </template>
             <div main-title>SmartUp - Ninja Program</div>
           </app-toolbar>
         </app-header>
 
-        <iron-pages
-            selected="[[page]]"
-            attr-for-selected="name"
-            fallback-selection="not-found"
-            role="main">
+        <template is="dom-if" if="{{!userLogedIn}}">
+          <button on-click="_doLogin">LOGIN</button>
+        </template>
 
-          <landing-view name="landing"></landing-view>
-          <dashboard-view name="dashboard" people="{{people}}" selected-user="{{selectedUser}}"></dashboard-view>
-          <detail-view name="detail" person="[[selectedUser]]"></detail-view>
-          <not-found-view name="not-found"></not-found-view>
+        <iron-pages
+          selected="[[page]]"
+          attr-for-selected="name"
+          fallback-selection="not-found"
+          role="main">
+
+          <template is="dom-if" if="{{userLogedIn}}">
+            <dashboard-view name="dashboard" people="{{people}}" selected-user="{{selectedUser}}"></dashboard-view>
+            <detail-view name="detail" person="[[selectedUser]]"></detail-view>
+            <not-found-view name="not-found"></not-found-view>
+          </template>
 
         </iron-pages>
 
@@ -129,13 +141,17 @@
           subroute: Object,
           rootPath: String,
           defaultView: {
-            type: String,
-            value: 'landing'
+            type: String
           },
           selectedUser: {
             type: Object,
             value: () => ({}),
             observer: '_onSelectUser'
+          },
+          userLogedIn: {
+            type: Boolean,
+            value: false,
+            notify: true
           }
         };
       }
@@ -148,12 +164,19 @@
       
       ready() {
         super.ready();
+        this._onRouteChange({ detail: { newRoute: '' } });
         this.addEventListener('change-route', this._onRouteChange);
+      }
+      
+      _doLogin() {
+        //oauth login here
+        this.userLogedIn = true;
+        this.defaultView = 'dashboard';
       }
 
       _onSelectUser(user) {
         if(!!Object.keys(user).length) {
-          this.set('route.path', 'detail');
+          this._onRouteChange({detail: {newRoute: 'detail'}});
         }
       }
       
@@ -168,8 +191,9 @@
 
       _routePageChanged(page) {
         // Close a non-persistent drawer when the page & route are changed.
-        if (!this.$.drawer.persistent) {
-          this.$.drawer.close();
+        let sideMenu = this.shadowRoot.querySelector('#drawer');
+        if (sideMenu && !sideMenu.persistent) {
+          sideMenu.close();
         }
         
         // If no page was found in the route data, page will be an empty string.
