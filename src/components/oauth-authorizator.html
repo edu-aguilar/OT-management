@@ -62,13 +62,18 @@
                     type: String
                 },
 
+                clientSecret: {
+                    type: String
+                },
+
                 /**
                  * Custom headers to send to the token services.
                  *
                  * @type Object
                  */
                 headers: {
-                    type: Object
+                    type: Object,
+                    computed: "_computeHeaders(clientId, clientSecret)"
                 },
 
                 /**
@@ -199,6 +204,11 @@
                 });
         }
 
+        _computeHeaders(clientId, clientSecret) {
+            let basicCredentials = btoa(`${this.clientId}:${this.clientSecret}`);
+            return {"Authorization": `Basic ${basicCredentials}`};
+        }
+
         /**
          * Performs the authentication.
          *
@@ -226,7 +236,7 @@
 
                 authUrl.search = params.toString();
 
-                const w = window.open(authUrl.toString());//, "", "width=400,height=400");
+                const w = window.open(authUrl.toString(), "", "width=400,height=400");
                 if (!w) {
                     return rej(new Error(
                         "Window handle was null.",
@@ -286,12 +296,9 @@
                 window.addEventListener('message', handleFunction);
             })
                 .then(code => {
-                    const body = new URLSearchParams();
-                    body.append('code', code);
-                    body.append('callbackUrl', this.redirectUrl);
-                    return OauthAuthorizator._retry(() => fetch(this.tokenExchangeUrl, {
-                        body: body,
+                    return OauthAuthorizator._retry(() => fetch(this.tokenExchangeUrl + `?grant_type=authorization_code&code=${code}&redirect_uri=${this.redirectUrl}`, {
                         headers: new Headers(this.headers || {}),
+                        credentials: 'include',
                         method: 'post'
                     }), 5000, 10);
                 })
@@ -328,9 +335,9 @@
 
             const body = new URLSearchParams();
             body.append('refresh_token', rt);
-            return OauthAuthorizator._retry(() => fetch(this.tokenRefreshUrl, {
-                body: body,
+            return OauthAuthorizator._retry(() => fetch(this.tokenRefreshUrl + `?refresh_token=${rt}&grant_type=refresh_token`, {
                 headers: new Headers(this.headers || {}),
+                credentials: 'include',
                 method: 'post'
             }), 5000, 10)
                 .then(OauthAuthorizator._ensureOk)

@@ -11,6 +11,7 @@
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="./components/login-handler.html">
 
 <link rel="lazy-import" href="views/dashboard-view.html">
 <link rel="lazy-import" href="views/detail-view.html">
@@ -89,7 +90,7 @@
         </app-header>
 
         <template is="dom-if" if="{{!userLogedIn}}">
-          <button on-click="_doLogin">LOGIN</button>
+          <login-handler user-logged-in="{{userLogedIn}}"></login-handler>
         </template>
 
         <iron-pages
@@ -140,8 +141,7 @@
           },
           userLogedIn: {
             type: Boolean,
-            value: false,
-            notify: true
+            value: false
           }
         };
       }
@@ -156,12 +156,11 @@
         super.ready();
         this._onRouteChange({ detail: { newRoute: '' } });
         this.addEventListener('change-route', this._onRouteChange);
+        this.addEventListener('login-done', this._onLoginSuccess);
       }
       
-      _doLogin() {
-        //oauth login here
-        this.userLogedIn = true;
-        this.defaultView = 'dashboard';
+      _onLoginSuccess(event) {
+        this.defaultView = event.detail.defaultView;
       }
 
       _onSelectUser(user) {

@@ -9,10 +9,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../components/oauth-authorizator.html">
-<link rel="import" href="../components/oauth-receiver.html">
+<link rel="import" href="oauth-authorizator.html">
+<link rel="import" href="oauth-receiver.html">
 
-<dom-module id="landing-view">
+<dom-module id="login-handler">
   <template>
     <style>
       :host {
@@ -27,6 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <oauth-authorizator access-token="{{accessToken}}"
                     authorization-url="http://localhost:8888/uaa/oauth/authorize"
                     client-id="hex-management"
+                    client-secret="1234"
                     redirect-url="http://localhost:8081/landing"
                     scopes="[[scopes]]"
                     token-exchange-url="http://localhost:8888/uaa/oauth/token"
@@ -37,19 +38,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <script>
-    class landingView extends (class extends Polymer.Element {}) {
-      static get is() { return 'landing-view'; }
+    class loginHandler extends (class extends Polymer.Element {}) {
+      static get is() { return 'login-handler'; }
       static get properties() {
         return {
           accessToken: {
             type: String,
-            observer: (newValue, oldValue) => {
-              console.log(oldValue, "cambia a ", newValue);
-            }
+            observer: '_loginDone'
           },
           scopes: {
             type: Array,
             value: () => ['read', 'write', 'admin']
+          },
+          userLoggedIn: {
+            type: Boolean,
+            value: false,
+            notify: true
           }
         };
       }
@@ -57,8 +61,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _doLogin() {
         this.shadowRoot.querySelector('oauth-authorizator').login();
       }
+
+      _loginDone(token) {
+        if (token) {
+          this.userLoggedIn = true;
+          this.dispatchEvent(new CustomEvent('login-done', {
+            detail: {
+              defaultView: 'dashboard',
+              accessToken: token
+            },
+            composed: true
+          }));
+        }
+      }
     }
 
-    window.customElements.define(landingView.is, landingView);
+    window.customElements.define(loginHandler.is, loginHandler);
   </script>
 </dom-module>
