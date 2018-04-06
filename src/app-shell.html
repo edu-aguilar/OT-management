@@ -12,6 +12,7 @@
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="./components/login-handler.html">
+<link rel="import" href="./components/iron-ajax-auth-interceptor.html">
 
 <link rel="lazy-import" href="views/dashboard-view.html">
 <link rel="lazy-import" href="views/detail-view.html">
@@ -76,6 +77,8 @@
         tail="{{subroute}}">
       </app-route>
     </template>
+
+    <iron-ajax-auth-interceptor></iron-ajax-auth-interceptor>
 
     <app-drawer-layout fullbleed narrow="{{narrow}}">
       <!-- Drawer content -->
@@ -157,8 +160,14 @@
         this._onRouteChange({ detail: { newRoute: '' } });
         this.addEventListener('change-route', this._onRouteChange);
         this.addEventListener('login-done', this._onLoginSuccess);
+        this.addEventListener('iron-ajax-presend', this._setAuthHeaders);
       }
       
+      _setAuthHeaders(event) {
+        this.shadowRoot.querySelector('iron-ajax-auth-interceptor')
+          .setHeaders(event.detail.options);
+      }
+
       _onLoginSuccess(event) {
         this.defaultView = event.detail.defaultView;
       }
