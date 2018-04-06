@@ -11,6 +11,7 @@
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
 <link rel="import" href="./components/login-handler.html">
 <link rel="import" href="./components/iron-ajax-auth-interceptor.html">
 
@@ -62,6 +63,16 @@
         color: black;
         font-weight: bold;
       }
+
+      login-handler {
+        height: 100%;
+        box-sizing: border-box;
+      }
+
+      login-handler iron-image {
+        width: 100%;
+        height: 100%;
+      }
     </style>
 
     <app-location
@@ -88,27 +99,29 @@
 
         <app-header slot="header" condenses reveals effects="waterfall">
           <app-toolbar>
-            <div main-title>SmartUp - Ninja Program</div>
+            <div main-title>SmartUp - Ninja Program Management</div>
           </app-toolbar>
         </app-header>
 
         <template is="dom-if" if="{{!userLogedIn}}">
-          <login-handler user-logged-in="{{userLogedIn}}"></login-handler>
+          <login-handler user-logged-in="{{userLogedIn}}">
+            <iron-image sizing="cover" src="[[importPath]]../images/background-img.jpeg"></iron-image>
+          </login-handler>
         </template>
 
-        <iron-pages
-          selected="[[page]]"
-          attr-for-selected="name"
-          fallback-selection="not-found"
-          role="main">
+        <template is="dom-if" if="{{userLogedIn}}">
+          <iron-pages
+            selected="[[page]]"
+            attr-for-selected="name"
+            fallback-selection="not-found"
+            role="main">
 
-          <template is="dom-if" if="{{userLogedIn}}">
-            <dashboard-view name="dashboard" people="{{people}}" selected-user="{{selectedUser}}"></dashboard-view>
-            <detail-view name="detail" person="[[selectedUser]]"></detail-view>
-            <not-found-view name="not-found"></not-found-view>
-          </template>
-
-        </iron-pages>
+              <dashboard-view name="dashboard" people="{{people}}" selected-user="{{selectedUser}}"></dashboard-view>
+              <detail-view name="detail" person="[[selectedUser]]"></detail-view>
+              <not-found-view name="not-found"></not-found-view>
+          
+          </iron-pages>
+        </template>
 
       </app-header-layout>
 

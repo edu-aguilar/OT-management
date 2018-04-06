@@ -17,12 +17,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style>
       :host {
         display: block;
-        padding: 10px;
+        position: relative;
+      }
+
+      button {
+        position: absolute;
+        z-index: 10;
       }
     </style>
-    <div class="card">
-      <button on-click="_doLogin">Login</button>
-    </div>
+
+    <button on-click="_doLogin">Login</button>
+
+    <slot></slot>
 
     <oauth-authorizator 
       access-token="{{accessToken}}"
