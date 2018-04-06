@@ -24,14 +24,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <button on-click="_doLogin">Login</button>
     </div>
 
-    <oauth-authorizator access-token="{{accessToken}}"
-                    authorization-url="https://authserver.apps.sodigital.io/uaa/oauth/authorize"
-                    client-id="hex-management"
-                    client-secret="1234"
-                    redirect-url="http://localhost:8081/landing"
-                    scopes="[[scopes]]"
-                    token-exchange-url="https://authserver.apps.sodigital.io/uaa/oauth/token"
-                    token-refresh-url="https://authserver.apps.sodigital.io/uaa/oauth/token">
+    <oauth-authorizator 
+      access-token="{{accessToken}}"
+      authorization-url="https://authserver.apps.sodigital.io/uaa/oauth/authorize"
+      client-id="hex-management"
+      client-secret="1234"
+      redirect-url="http://localhost:8081/landing"
+      scopes="[[scopes]]"
+      token-exchange-url="https://authserver.apps.sodigital.io/uaa/oauth/token"
+      token-refresh-url="https://authserver.apps.sodigital.io/uaa/oauth/token">
     </oauth-authorizator>
 
     <oauth-receiver></oauth-receiver>

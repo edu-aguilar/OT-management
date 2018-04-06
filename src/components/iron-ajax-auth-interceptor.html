@@ -35,6 +35,10 @@
           headers: {
             type: Object,
             value: () => ({})
+          },
+          accessToken: {
+            type: String,
+            value: null
           }
         };
       }
@@ -60,7 +64,7 @@
       }
 
       setHeaders(request) {
-        request.headers['Authorization'] = 'Bearer COMPONENT WORKINGGGG';
+        request.headers['Authorization'] = `Bearer ${this.accessToken}`;
       }
 
     }

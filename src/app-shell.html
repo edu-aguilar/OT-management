@@ -169,6 +169,8 @@
       }
 
       _onLoginSuccess(event) {
+        this.shadowRoot.querySelector('iron-ajax-auth-interceptor')
+          .accessToken = event.detail.accessToken;
         this.defaultView = event.detail.defaultView;
       }
 
